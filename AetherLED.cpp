@@ -23,17 +23,30 @@ void AetherLED::turnOffLeds() {
 }
 
 // Snake functions
-void AetherLED::setSnakeSpeed(int timerSpeed) {
-  _snakeTimerLength = timerSpeed;
+void AetherLED::setSnakeSpeed(int newSpeed) {
+  _snakeTimerLength = newSpeed;
 }
 
-void AetherLED::runSnakeAnimation(bool shouldLoop) {
+void AetherLED::setSnakeIndex(int newIndex) {
+  if(newIndex > _NUM_LEDS) {
+    _snakeIndex = _NUM_LEDS;
+  }
+  else if(newIndex <= 0) {
+    _snakeIndex = 0;
+  }
+  else {
+    _snakeIndex = newIndex;
+  }
+}
+
+void AetherLED::runSnakeAnimation(CHSV color, bool shouldLoop, bool shouldFill) {
   if(millis() > _snakeTimer + _snakeTimerLength) {
     _snakeTimer = millis();
+    CHSV _thisColor = color;
 
     if(_snakeIndex <= 0) {
       _snakeIndex = 0;
-      _shouldCountUp = true;
+      _snakeDirection = +1;
     }
     if(_snakeIndex >= _NUM_LEDS) {
       if(shouldLoop == true) {
@@ -41,18 +54,21 @@ void AetherLED::runSnakeAnimation(bool shouldLoop) {
       }
       else {
         _snakeIndex = _NUM_LEDS;
-        _shouldCountUp = false;
+        _snakeDirection = -1;
+      }
+    }
+    _snakeIndex = _snakeIndex + _snakeDirection;
+
+    if(shouldFill == false) {
+      turnOffLeds();
+    }
+    else {
+      // Should we clear this pixel? If not, then we just rely on the provided color.value
+      if(_ledsHSV[_snakeIndex].value > 0) {
+        _thisColor.value = 0;
       }
     }
 
-    if(_shouldCountUp == true) {
-      _snakeIndex++;
-    }
-    else {
-      _snakeIndex--;
-    }
-
-    turnOffLeds();
-    setLEDHSV(_snakeIndex, CHSV(120, 255, 255));
+    setLEDHSV(_snakeIndex, _thisColor);
   }
 }

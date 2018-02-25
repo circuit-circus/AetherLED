@@ -14,8 +14,9 @@ class AetherLED {
     AetherLED(int pin, int numLeds);
     void turnOffLeds();
     void setLEDHSV(int ledIndex, CHSV color);
-    void setSnakeSpeed(int timerSpeed);
-    void runSnakeAnimation(bool shouldLoop);
+    void setSnakeSpeed(int newSpeed);
+    void setSnakeIndex(int newIndex);
+    void runSnakeAnimation(CHSV color, bool shouldLoop, bool shouldFill);
    
   private:
   	static const int _NUM_LEDS = 61;
@@ -24,7 +25,7 @@ class AetherLED {
 
 	// Snake settings
 	unsigned int _snakeIndex = 0;
-	bool _shouldCountUp = true;
+	int _snakeDirection = +1;
     long _snakeTimer;
     long _snakeTimerLength;
 };
