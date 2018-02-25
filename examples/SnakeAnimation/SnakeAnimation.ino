@@ -11,11 +11,12 @@ void setup() {
   // Sanity check, to protect LEDs and Arduino
   delay(2000);
   Serial.begin(9600);
-  ringOne.setSnakeSpeed(30);
-  ringOne.setSnakeIndex(30);
+  ringOne.setSnakeSpeed(500);
+  ringOne.setSnakeIndex(55);
+  ringOne.setSnakeDirection(+1);
 }
 
 void loop() {
-  ringOne.runSnakeAnimation(CHSV(120, 255, 255), true, true);
+  ringOne.runSnakeAnimation(CHSV(120, 255, 255), false, false);
   FastLED.show();
 }

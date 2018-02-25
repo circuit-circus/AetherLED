@@ -16,6 +16,7 @@ class AetherLED {
     void setLEDHSV(int ledIndex, CHSV color);
     void setSnakeSpeed(int newSpeed);
     void setSnakeIndex(int newIndex);
+    void setSnakeDirection(int newDirection);
     void runSnakeAnimation(CHSV color, bool shouldLoop, bool shouldFill);
    
   private:

@@ -39,6 +39,13 @@ void AetherLED::setSnakeIndex(int newIndex) {
   }
 }
 
+void AetherLED::setSnakeDirection(int newDirection) {
+  // Set newDirection to 0 to stop the snake
+  if(newDirection < 2 && newDirection > -2) {
+    _snakeDirection = newDirection;
+  }
+}
+
 void AetherLED::runSnakeAnimation(CHSV color, bool shouldLoop, bool shouldFill) {
   if(millis() > _snakeTimer + _snakeTimerLength) {
     _snakeTimer = millis();
@@ -48,16 +55,18 @@ void AetherLED::runSnakeAnimation(CHSV color, bool shouldLoop, bool shouldFill) 
       _snakeIndex = 0;
       _snakeDirection = +1;
     }
+
     if(_snakeIndex >= _NUM_LEDS) {
       if(shouldLoop == true) {
         _snakeIndex = 0;
+        _snakeDirection = +1;
       }
       else {
         _snakeIndex = _NUM_LEDS;
         _snakeDirection = -1;
       }
     }
-    _snakeIndex = _snakeIndex + _snakeDirection;
+    _snakeIndex += _snakeDirection;
 
     if(shouldFill == false) {
       turnOffLeds();
