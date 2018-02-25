@@ -1,22 +1,24 @@
-#include <AetherLED.h>
+#include "AetherLED.h"
 
-#define NUM_LEDS 61
-#define DATA_PIN 5
-#define CHIPSET WS2812B
-#define COLOR_ORDER GRB
+#define DATA_PIN_ONE 5
+#define NUM_LEDS_ONE 61
 
-AetherLED ringOne(DATA_PIN, NUM_LEDS);
+AetherLED ringOne(DATA_PIN_ONE, NUM_LEDS_ONE);
+
+CHSV ledColor = CHSV(0, 180, 255);
 
 void setup() {
   // Sanity check, to protect LEDs and Arduino
   delay(2000);
   Serial.begin(9600);
-  ringOne.setSnakeSpeed(500);
+
+  ringOne.setSnakeSpeed(30);
   ringOne.setSnakeIndex(55);
-  ringOne.setSnakeDirection(+1);
+  ringOne.setSnakeDirection(-1);
 }
 
 void loop() {
-  ringOne.runSnakeAnimation(CHSV(120, 255, 255), false, false);
+  //ringOne.setBackgroundColor(CHSV(96, 255, 120));
+  ringOne.runSnakeAnimation(ledColor, true, false, true);
   FastLED.show();
 }
