@@ -1,14 +1,8 @@
 #include "AetherLED.h"
 
-#define CHIPSET WS2812B
-#define COLOR_ORDER GRB
-
 // Constructor
 // For more info on this constructor, see: https://stackoverflow.com/questions/1423696/how-to-initialize-a-const-field-in-constructor
-AetherLED::AetherLED(int pin, int numLeds) : _PIN(pin), _NUM_LEDS(numLeds) {
-  FastLED.addLeds<CHIPSET, 5, COLOR_ORDER>(_leds, 61);
-  _snakeTimerLength = 50;
-}
+AetherLED::AetherLED() {}
 
 // Helper methods
 void AetherLED::setSingleHSV(int ledIndex, CHSV color) {
