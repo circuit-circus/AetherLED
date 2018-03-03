@@ -1,13 +1,13 @@
-#include "AetherLED.h"
+#include <AetherLED.h>
 
-#define DATA_PIN_ONE 5
-#define NUM_LEDS_ONE 61
+#define DATA_PIN_ONE 6
+#define NUM_LEDS_ONE 90
 
-#define DATA_PIN_TWO 6
-#define NUM_LEDS_TWO 61
+#define DATA_PIN_TWO 7
+#define NUM_LEDS_TWO 90
 
-AetherLED ringOne;
-AetherLED ringTwo;
+AetherLED<DATA_PIN_ONE, NUM_LEDS_ONE> ringOne;
+AetherLED<DATA_PIN_TWO, NUM_LEDS_TWO> ringTwo;
 
 CHSV ledColorOne = CHSV(0, 220, 255);
 CHSV ledColorTwo = CHSV(95, 220, 255);
@@ -15,14 +15,13 @@ CHSV ledColorTwo = CHSV(95, 220, 255);
 void setup() {
   // Sanity check, to protect LEDs and Arduino
   delay(2000);
-  Serial.begin(9600);
 
-  ringOne.attach<DATA_PIN_ONE>(NUM_LEDS_ONE);
+  ringOne.attach();
   ringOne.setSnakeSpeed(30);
   ringOne.setSnakeIndex(30);
   ringOne.setSnakeDirection(+1);
 
-  ringTwo.attach<DATA_PIN_TWO>(NUM_LEDS_TWO);
+  ringTwo.attach();
   ringOne.setSnakeSpeed(15);
   ringOne.setSnakeIndex(0);
   ringOne.setSnakeDirection(-1);
